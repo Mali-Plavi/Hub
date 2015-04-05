@@ -38,7 +38,6 @@ public class Listener implements org.bukkit.event.Listener{
 			if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Cosmetic Menu")){
 				cosmetic = Bukkit.createInventory(null,45,"Cosmetic Menu");
 				
-				e.getPlayer().sendMessage("hello");
 				
 				//Itemstack shit
 					//particles
@@ -46,9 +45,15 @@ public class Listener implements org.bukkit.event.Listener{
 				ItemMeta pm = p.getItemMeta();
 				pm.setDisplayName(ChatColor.GOLD + "Particles");
 				p.setItemMeta(pm);
+					//pets
+				ItemStack pe = new ItemStack(Material.BONE);
+				ItemMeta pem = p.getItemMeta();
+				pm.setDisplayName(ChatColor.GOLD + "Pets");
+				p.setItemMeta(pm);
 				
 				//setting up inv
 				cosmetic.setItem(10, p);
+				cosmetic.setItem(12, pe);
 				
 				//giving items
 				e.getPlayer().openInventory(cosmetic);
