@@ -4,18 +4,13 @@ main: com.MCNation.hub.Main
 
 commands:
   help:
-    description: A help command.
-    usage: /help
+    description: Simple help command.
   teleport:
     description: Teleports players.
-    usage: /teleport
   setwarp:
     description: Sets the warp. 
-    usage: /setwarp
   warp:
     description: Uses the warp function.
-    usage: /warp
   warps:
     description: Lists the warps.
-    usage: /warps
   
