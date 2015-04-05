@@ -11,8 +11,11 @@ commands:
     usage: /teleport
   setwarp:
     description: Sets the warp. 
+    usage: /setwarp
   warp:
     description: Uses the warp function.
+    usage: /warp
   warps:
     description: Lists the warps.
+    usage: /warps
   
