@@ -34,12 +34,26 @@ public class Listener implements org.bukkit.event.Listener{
 	public void PlayerInteract(PlayerInteractEvent e){
 		Action a = e.getAction();
 		if(a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK){
-			cosmetic = Bukkit.createInventory(null, 45);
 			if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Cosmetic Menu")){
+				cosmetic = Bukkit.createInventory(null, 45);
+				
+				//Itemstack shit
+					//particles
+				ItemStack p = new ItemStack(Material.BLAZE_POWDER);
+				ItemMeta pm = p.getItemMeta();
+				pm.setDisplayName(ChatColor.GOLD + "Particles");
+				p.setItemMeta(pm);
+				
+				//setting up inv
+				cosmetic.setItem(10, p);
+				
+				//giving items
 				e.getPlayer().openInventory(cosmetic);
 			}
 		}
 	}
+	
+	
 	
 	
 }
