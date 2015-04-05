@@ -1,3 +1,9 @@
 name: Hub Essentials
 version: 1.0
 main: com.MCNation.hub.Main
+
+commands:
+  help:
+    description: A help command.
+    usage: /help
+  
