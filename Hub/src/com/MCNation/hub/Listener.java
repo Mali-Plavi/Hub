@@ -1,5 +1,6 @@
 package com.MCNation.hub;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -16,7 +17,7 @@ public class Listener implements org.bukkit.event.Listener{
 		
 		ItemStack i = new ItemStack(Material.CHEST);
 		ItemMeta m = i.getItemMeta();
-		m.setDisplayName(Color.LIME + "Cosmetic Menu");
+		m.setDisplayName(ChatColor.GREEN + "Cosmetic Menu");
 		i.setItemMeta(m);
 		
 		p.getInventory().setItem(4, i);
