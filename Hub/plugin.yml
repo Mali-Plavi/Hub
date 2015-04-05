@@ -6,4 +6,7 @@ commands:
   help:
     description: A help command.
     usage: /help
+  teleport:
+    description: Teleports players.
+    usage: /teleport
   
