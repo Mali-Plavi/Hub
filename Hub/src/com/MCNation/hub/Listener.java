@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
@@ -16,7 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class Listener implements org.bukkit.event.Listener{
 	//Gadgets
 		//Cosmetic
-	public Inventory cosmetic;
+	public Inventory cosmetic, pa;
 	
 	@EventHandler
 	public void playerJoinEvent(PlayerJoinEvent e){
@@ -35,7 +36,7 @@ public class Listener implements org.bukkit.event.Listener{
 		Action a = e.getAction();
 		if(a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK){
 			if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Cosmetic Menu")){
-				cosmetic = Bukkit.createInventory(null, 45);
+				cosmetic = Bukkit.createInventory(null,45,"Cosmetic Menu");
 				
 				//Itemstack shit
 					//particles
@@ -52,8 +53,15 @@ public class Listener implements org.bukkit.event.Listener{
 			}
 		}
 	}
-	
-	
-	
-	
+			//the thing for when you click in inv
+	@EventHandler
+	public void invInteract(InventoryClickEvent e){
+		Player p = (Player) e.getWhoClicked();
+		//particles
+		p.sendMessage("pass");
+		if(e.getCurrentItem().getItemMeta().getDisplayName().contains("Particles")){
+			pa = Bukkit.createInventory(null, 45);
+			p.openInventory(pa);
+		}
+	}
 }
