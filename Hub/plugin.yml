@@ -13,4 +13,8 @@ commands:
     description: Uses the warp function.
   warps:
     description: Lists the warps.
+  kick:
+    description: Kicks a player.
+  ban:
+    description: Bans a player.
   
