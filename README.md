@@ -1,0 +1,2 @@
+# Hub
+MCNation hub plugin
