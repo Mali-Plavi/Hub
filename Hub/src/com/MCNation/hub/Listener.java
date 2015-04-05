@@ -38,6 +38,8 @@ public class Listener implements org.bukkit.event.Listener{
 			if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Cosmetic Menu")){
 				cosmetic = Bukkit.createInventory(null,45,"Cosmetic Menu");
 				
+				e.getPlayer().sendMessage("hello");
+				
 				//Itemstack shit
 					//particles
 				ItemStack p = new ItemStack(Material.BLAZE_POWDER);
@@ -58,10 +60,11 @@ public class Listener implements org.bukkit.event.Listener{
 	public void invInteract(InventoryClickEvent e){
 		Player p = (Player) e.getWhoClicked();
 		//particles
-		p.sendMessage("pass");
-		if(e.getCurrentItem().getItemMeta().getDisplayName().contains("Particles")){
-			pa = Bukkit.createInventory(null, 45);
-			p.openInventory(pa);
-		}
+			if(e.getInventory().getName().contains("Cosmetic Menu")){
+				if(e.getCurrentItem().getItemMeta().getDisplayName().contains("Particles")){
+					pa = Bukkit.createInventory(null, 45, "Particles");
+					p.openInventory(pa);
+				}
+			}
 	}
 }
