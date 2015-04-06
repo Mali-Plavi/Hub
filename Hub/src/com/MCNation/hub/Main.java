@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin{
@@ -58,8 +59,9 @@ public class Main extends JavaPlugin{
 		public void onDisable() {
 			saveWarpConfig();
 		}
-		
+		//Help
 		public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+			
 			Player player = (Player) sender;
 			if(commandLabel.equalsIgnoreCase("help")) {
 				player.sendMessage(ChatColor.GOLD + "A more comprehensive help system will come in the future.");
@@ -77,7 +79,7 @@ public class Main extends JavaPlugin{
 				    Location targetPlayer1Location = targetPlayer1.getLocation();
 				    targetPlayer.teleport(targetPlayer1Location);
 				}
-			}
+			} //Warps
 			if(commandLabel.equalsIgnoreCase("setwarp")) {
 				if(player.hasPermission("setwarp")||player.isOp()){
 				FileConfiguration c = getWarpConfig();
@@ -114,5 +116,11 @@ public class Main extends JavaPlugin{
 				}
 			Enforcement.Command(sender, cmd, commandLabel, args);
 			return false;
+		} //Join Message
+		public void onPlayerJoin(PlayerJoinEvent e) {
+			
+			Player player = e.getPlayer();
+			
+			e.setJoinMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "+" + ChatColor.GRAY + "] " + player.getName());
 		}
 }
