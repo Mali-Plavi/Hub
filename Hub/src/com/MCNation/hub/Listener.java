@@ -201,6 +201,6 @@ public class Listener implements org.bukkit.event.Listener{
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent l) {
 		Player player = l.getPlayer();
-		l.setQuitMessage(ChatColor.GRAY + "[" + ChatColor.RED + "-" + ChatColor.GRAY + "]" + player.getName());
+		l.setQuitMessage(ChatColor.GRAY + "[" + ChatColor.RED + "-" + ChatColor.GRAY + "] " + player.getName());
 	}
 }
