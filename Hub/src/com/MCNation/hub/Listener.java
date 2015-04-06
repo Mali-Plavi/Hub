@@ -10,6 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryInteractEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
@@ -38,7 +41,7 @@ public class Listener implements org.bukkit.event.Listener{
 	public void PlayerInteract(PlayerInteractEvent e){
 		Action a = e.getAction();
 		if(a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK){
-			if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName() != null){
+			if(e.getPlayer().getItemInHand().getItemMeta() != null){
 				if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Cosmetic Menu")){
 					cosmetics(e.getPlayer());
 				}
@@ -88,58 +91,103 @@ public class Listener implements org.bukkit.event.Listener{
 		pl.openInventory(cosmetic);
 	}
 	
+	public void pa(Player p){
+		ItemStack bk = new ItemStack(Material.REDSTONE_BLOCK);
+		ItemMeta bkm = bk.getItemMeta();
+		bkm.setDisplayName(ChatColor.GOLD + "Back");
+		bk.setItemMeta(bkm);
+		
+		pe = Bukkit.createInventory(null, 45+9, "Particles");
+		pe.setItem(45, bk);
+		p.closeInventory();
+		p.openInventory(pe);
+		return;
+		
+	}
+	
+	public void pe(Player p){
+		ItemStack bk = new ItemStack(Material.REDSTONE_BLOCK);
+		ItemMeta bkm = bk.getItemMeta();
+		bkm.setDisplayName(ChatColor.GOLD + "Back");
+		bk.setItemMeta(bkm);
+		
+		pe = Bukkit.createInventory(null, 45+9, "Pets");
+		pe.setItem(45, bk);
+		p.openInventory(pe);
+	}
+	
+	public void ga(Player p){
+		ItemStack bk = new ItemStack(Material.REDSTONE_BLOCK);
+		ItemMeta bkm = bk.getItemMeta();
+		bkm.setDisplayName(ChatColor.GOLD + "Back");
+		bk.setItemMeta(bkm);
+		
+		g = Bukkit.createInventory(null, 45+9, "Gadgets");g.setItem(45, bk);
+		p.openInventory(g);
+	}
+	public void wa(Player p){
+		ItemStack bk = new ItemStack(Material.REDSTONE_BLOCK);
+		ItemMeta bkm = bk.getItemMeta();
+		bkm.setDisplayName(ChatColor.GOLD + "Back");
+		bk.setItemMeta(bkm);
+		
+		w = Bukkit.createInventory(null, 45+9, "Wardrobe");w.setItem(45, bk);
+		p.openInventory(w);
+	}
+	
+	public void mo(Player p){
+		ItemStack bk = new ItemStack(Material.REDSTONE_BLOCK);
+		ItemMeta bkm = bk.getItemMeta();
+		bkm.setDisplayName(ChatColor.GOLD + "Back");
+		bk.setItemMeta(bkm);
+		
+		m = Bukkit.createInventory(null, 45+9, "Mounts");m.setItem(45, bk);
+		p.openInventory(m);
+	}
+	
 			//the thing for when you click in inv
 	@EventHandler
 	public void invInteract(InventoryClickEvent e){
+		if(e.getCurrentItem() != null){
 		if(e.getCurrentItem().getItemMeta() != null){
 		String name = e.getInventory().getName();
 		Player p = (Player) e.getWhoClicked();
 		
 			if(e.getInventory().getName().contains("Cosmetic Menu")){
-				ItemStack bk = new ItemStack(Material.REDSTONE_BLOCK);
-				ItemMeta bkm = bk.getItemMeta();
-				bkm.setDisplayName(ChatColor.GOLD + "Back");
-				bk.setItemMeta(bkm);
 				
 				if(e.getCurrentItem().getItemMeta().getDisplayName() != null)				//particles
 				if(e.getCurrentItem().getItemMeta().getDisplayName().contains("Particles")){
-						pa = Bukkit.createInventory(null, 45+9, "Particles");
-						pa.setItem(45, bk);
-						p.closeInventory();
-						p.openInventory(pa);
+					e.setCancelled(true);
+						pa(p);
 						return;
 				}
 				//pets
 				else if(e.getCurrentItem().getItemMeta().getDisplayName().contains("Pets")){
-					pe = Bukkit.createInventory(null, 45+9, "Pets");
-					pe.setItem(45, bk);
-					p.openInventory(pe);
+					e.setCancelled(true);
+					pe(p);
 				}
 				//gadgets
 				else if(e.getCurrentItem().getItemMeta().getDisplayName().contains("Gadgets")){
-					g = Bukkit.createInventory(null, 45+9, "Gadgets");pa.setItem(45, bk);
-					p.openInventory(g);
+					e.setCancelled(true);
+					ga(p);
 				}
 				//wardrobe
 				else if(e.getCurrentItem().getItemMeta().getDisplayName().contains("Wardrobe")){
-					w = Bukkit.createInventory(null, 45+9, "Wardrobe");pa.setItem(45, bk);
-					p.openInventory(w);
+					e.setCancelled(true);
+					wa(p);
 					}
 				//mounts
 				else if(e.getCurrentItem().getItemMeta().getDisplayName().contains("Mounts")){
-						m = Bukkit.createInventory(null, 45+9, "Mounts");pa.setItem(45, bk);
-						p.openInventory(m);
+					e.setCancelled(true);
+					mo(p);
 						}
 			}
+			String n = e.getInventory().getName();
+			if(n.contains("Particles")||n.contains("Pets")||n.contains("Gadgets")||n.contains("Wardrobe")||n.contains("Mounts")){
+			if(e.getCurrentItem().getItemMeta().getDisplayName().contains("Back")){
+				e.setCancelled(true);
+				cosmetics(p);
+			}}}}
+			
 		}
-	}
-	
-	@EventHandler
-	public void interact(InventoryClickEvent e){
-		Player p = (Player) e.getWhoClicked();
-		String name = e.getInventory().getName();
-		if(e.getCurrentItem().getItemMeta().getDisplayName().contains("Back")){
-			cosmetics(p);
-}
-	}
 }
