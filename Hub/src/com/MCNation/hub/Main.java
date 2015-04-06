@@ -117,10 +117,5 @@ public class Main extends JavaPlugin{
 			Enforcement.Command(sender, cmd, commandLabel, args);
 			return false;
 		} //Join Message
-		public void onPlayerJoin(PlayerJoinEvent e) {
-			
-			Player player = e.getPlayer();
-			
-			e.setJoinMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "+" + ChatColor.GRAY + "] " + player.getName());
-		}
+		
 }
