@@ -1,9 +1,15 @@
 package com.MCNation.hub;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,15 +19,44 @@ public class Main extends JavaPlugin{
 		public final String[] warpNames = new String[100];
 		public int warpCounter = 0;
 	    
+		private FileConfiguration warpc = null;
+		private File warpf = null;
+		
+		public void reloadWarpConfig() {
+		    if (warpf == null) {
+		    warpf = new File(getDataFolder(), "warp.yml");
+		    }
+		    warpc = YamlConfiguration.loadConfiguration(warpf);
+		}
+		
+		public FileConfiguration getWarpConfig() {
+		    if (warpc == null) {
+		        reloadWarpConfig();
+		    }
+		    return warpc;
+		}
+		
+		public void saveWarpConfig() {
+		    if (warpc == null || warpf == null) {
+		        return;
+		    }
+		    try {
+		        getWarpConfig().save(warpf);
+		    } catch (IOException ex) {
+		        getLogger().log(Level.SEVERE, "Could not save config to " + warpf, ex);
+		    }
+		}
+		
 	    @Override
 		public void onEnable() {
 			this.getServer().getPluginManager().registerEvents(new Listener(), this);
 			this.getConfig().options().copyDefaults(true);
+			getCommand("command_name").setExecutor(new Enforcement(this));
 		}
 		
 		@Override
 		public void onDisable() {
-			
+			saveWarpConfig();
 		}
 		
 		public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -44,40 +79,40 @@ public class Main extends JavaPlugin{
 				}
 			}
 			if(commandLabel.equalsIgnoreCase("setwarp")) {
+				if(player.hasPermission("setwarp")||player.isOp()){
+				FileConfiguration c = getWarpConfig();
 				if(args.length == 0) {
 					player.sendMessage(ChatColor.RED + "/setwarp <warpname>");
 				}else {
 					Location location = player.getLocation();
 					if(!(warpCounter > 100)) {
-						warpLocations[warpCounter] = location;
-						warpNames[warpCounter] = args[0];
+						c.set(args[0], location);
+						saveWarpConfig();
 						warpCounter++;
 						player.sendMessage(ChatColor.GREEN + "Warp Set As: " + args[0]);
-					}else {
+						}else {
 						player.sendMessage(ChatColor.RED + "Warp Limit Exceeded! Unabled To Create Warp!");
 						
+						}
 					}
 				}
 			}else if(commandLabel.equalsIgnoreCase("warp")) {
-				for(int i = 0; i < warpNames.length; i++) {
-					String warpName = warpNames[i];
-					if(args[0].equalsIgnoreCase(warpName)) {
-						Location warpLocation = warpLocations[i];
-						player.teleport(warpLocation);
-						player.sendMessage(ChatColor.GREEN + "Teleported to " + warpName);
-						break;
-					}
+				if(args.length == 0){
+					player.sendMessage(ChatColor.RED + "/warp <warpname>");
+				}else{
+					if(getWarpConfig().contains(args[0])){
+						player.teleport((Location) getWarpConfig().get(args[0]));
+						player.sendMessage(ChatColor.GREEN + "Sucuessfuly warped to " + args[0]);
+				}else{
+					player.sendMessage(ChatColor.RED + "That warp doesen't exist");
+				}
 				}
 			}else if(commandLabel.equalsIgnoreCase("warps")) {
 				String warps = "";
-				for(int i = 0; i <warpNames.length; i++) {
-					if(i !=warpNames.length) {
-						warps+= warpNames[i] + ", ".replace("null", "");
-					}else {
-						player.sendMessage(ChatColor.DARK_GRAY + "Showing All Warps: " + ChatColor.GRAY + warps);
-					}
+				player.sendMessage("TO BE IMPLEMENTED");
+					
 				}
-			}
+			Enforcement.Command(sender, cmd, commandLabel, args);
 			return false;
 		}
 }

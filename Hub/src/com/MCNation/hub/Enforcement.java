@@ -3,16 +3,21 @@ package com.MCNation.hub;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
  
-public class Enforcement extends JavaPlugin {
- 
-        public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+public class Enforcement extends JavaPlugin implements CommandExecutor{
+		private Main plugin;
+		public Enforcement(Main plugin){
+			this.plugin = plugin;
+		}
+		public static boolean Command(CommandSender sender, Command cmd, String commandLabel, String[] args) {
                 if (cmd.getName().equalsIgnoreCase("kick")) {
+                	Player p = (Player) sender;
                         if (args.length == 0) {
-                                sender.sendMessage(ChatColor.RED + "Please specify a player!");
+                                p.sendMessage(ChatColor.RED + "Please specify a player!");
                                 return true;
                         }
                         Player target = Bukkit.getServer().getPlayer(args[0]);
