@@ -3,6 +3,7 @@ package com.MCNation.hub;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -11,8 +12,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
 
 public class Main extends JavaPlugin{
 
@@ -29,6 +34,7 @@ public class Main extends JavaPlugin{
 		    }
 		    warpc = YamlConfiguration.loadConfiguration(warpf);
 		}
+		
 		
 		public FileConfiguration getWarpConfig() {
 		    if (warpc == null) {
@@ -47,6 +53,8 @@ public class Main extends JavaPlugin{
 		        getLogger().log(Level.SEVERE, "Could not save config to " + warpf, ex);
 		    }
 		}
+		
+		private static final Logger log = Logger.getLogger("Minecraft");
 		
 	    @Override
 		public void onEnable() {

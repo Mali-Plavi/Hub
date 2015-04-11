@@ -195,7 +195,6 @@ public class Listener implements org.bukkit.event.Listener{
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		
 		Player player = e.getPlayer();
-		
 		e.setJoinMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "+" + ChatColor.GRAY + "] " + player.getName());
 	}
 	@EventHandler

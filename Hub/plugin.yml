@@ -17,4 +17,7 @@ commands:
     description: Kicks a player.
   ban:
     description: Bans a player.
-  
+  setBalance:
+    description: adds shit to your acc.
+  getBalance:
+    description: gets shit
