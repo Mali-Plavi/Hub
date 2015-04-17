@@ -7,11 +7,13 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -22,6 +24,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 public class Listener implements org.bukkit.event.Listener{
+	
 	//Gadgets
 		//Cosmetic
 	public Inventory cosmetic, pa, pe, g,w,m;
@@ -43,9 +46,10 @@ public class Listener implements org.bukkit.event.Listener{
 		Action a = e.getAction();
 		if(a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK){
 			if(e.getPlayer().getItemInHand().getItemMeta() != null){
+				if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName() != null){
 				if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Cosmetic Menu")){
 					cosmetics(e.getPlayer());
-				}
+				}}
 			}
 		}
 	}
@@ -201,5 +205,10 @@ public class Listener implements org.bukkit.event.Listener{
 	public void onPlayerQuit(PlayerQuitEvent l) {
 		Player player = l.getPlayer();
 		l.setQuitMessage(ChatColor.GRAY + "[" + ChatColor.RED + "-" + ChatColor.GRAY + "] " + player.getName());
+	}
+	
+	@EventHandler
+	public void onChat(AsyncPlayerChatEvent e){
+		ChatManager.onChat(e);
 	}
 }

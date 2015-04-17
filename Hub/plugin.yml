@@ -21,3 +21,5 @@ commands:
     description: adds shit to your acc.
   getBalance:
     description: gets shit
+  tpall:
+    description: tps

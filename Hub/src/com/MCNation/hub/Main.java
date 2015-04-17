@@ -27,6 +27,7 @@ public class Main extends JavaPlugin{
 	    
 		private FileConfiguration warpc = null;
 		private File warpf = null;
+		private Main instance;
 		
 		public void reloadWarpConfig() {
 		    if (warpf == null) {
@@ -123,6 +124,7 @@ public class Main extends JavaPlugin{
 					
 				}
 			Enforcement.Command(sender, cmd, commandLabel, args);
+			TeleportManager.onCommand(sender, cmd, commandLabel, args);
 			return false;
 		} //Join Message
 		
