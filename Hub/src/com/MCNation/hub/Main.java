@@ -29,6 +29,35 @@ public class Main extends JavaPlugin{
 		private File warpf = null;
 		private Main instance;
 		
+		private FileConfiguration efc = null;
+		private File ef = null;
+		
+		public void reloadEconConfig() {
+		    if (ef == null) {
+		    ef = new File(getDataFolder(), "econ.yml");
+		    }
+		    efc = YamlConfiguration.loadConfiguration(ef);
+		}
+		
+		
+		public FileConfiguration getEconConfig() {
+		    if (efc == null) {
+		        reloadEconConfig();
+		    }
+		    return efc;
+		}
+		
+		public void saveEconConfig() {
+		    if (efc == null || ef == null) {
+		        return;
+		    }
+		    try {
+		        getEconConfig().save(ef);
+		    } catch (IOException ex) {
+		        getLogger().log(Level.SEVERE, "Could not save config to " + ef, ex);
+		    }
+		}
+		
 		public void reloadWarpConfig() {
 		    if (warpf == null) {
 		    warpf = new File(getDataFolder(), "warp.yml");
@@ -125,6 +154,7 @@ public class Main extends JavaPlugin{
 				}
 			Enforcement.Command(sender, cmd, commandLabel, args);
 			TeleportManager.onCommand(sender, cmd, commandLabel, args);
+			EconomyCmd.onCommand(sender, cmd, commandLabel, args);
 			return false;
 		} //Join Message
 		
