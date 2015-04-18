@@ -15,12 +15,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.permission.Permission;
+import com.MCNation.economy.Economy;
+
 
 public class Main extends JavaPlugin{
-
+		
 		public final Location[] warpLocations = new Location[100];
 		public final String[] warpNames = new String[100];
 		public int warpCounter = 0;
@@ -29,34 +28,9 @@ public class Main extends JavaPlugin{
 		private File warpf = null;
 		private Main instance;
 		
-		private FileConfiguration efc = null;
-		private File ef = null;
-		
-		public void reloadEconConfig() {
-		    if (ef == null) {
-		    ef = new File(getDataFolder(), "econ.yml");
-		    }
-		    efc = YamlConfiguration.loadConfiguration(ef);
-		}
 		
 		
-		public FileConfiguration getEconConfig() {
-		    if (efc == null) {
-		        reloadEconConfig();
-		    }
-		    return efc;
-		}
 		
-		public void saveEconConfig() {
-		    if (efc == null || ef == null) {
-		        return;
-		    }
-		    try {
-		        getEconConfig().save(ef);
-		    } catch (IOException ex) {
-		        getLogger().log(Level.SEVERE, "Could not save config to " + ef, ex);
-		    }
-		}
 		
 		public void reloadWarpConfig() {
 		    if (warpf == null) {
@@ -154,7 +128,10 @@ public class Main extends JavaPlugin{
 				}
 			Enforcement.Command(sender, cmd, commandLabel, args);
 			TeleportManager.onCommand(sender, cmd, commandLabel, args);
-			EconomyCmd.onCommand(sender, cmd, commandLabel, args);
+			
+			Economy e = new Economy();
+			
+			e.Command(sender, cmd, commandLabel, args);
 			return false;
 		} //Join Message
 		

@@ -193,13 +193,8 @@ public class Listener implements org.bukkit.event.Listener{
 		}
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
-		
-		Economy econ = new Economy();
-		
 		Player player = e.getPlayer();
 		e.setJoinMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "+" + ChatColor.GRAY + "] " + player.getName());
-		
-		econ.addPlayer(player);
 	}
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent l) {
