@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.MCNation.chat.Nicknames;
 import com.MCNation.economy.Economy;
 
 
@@ -63,6 +64,7 @@ public class Main extends JavaPlugin{
 	    @Override
 		public void onEnable() {
 			this.getServer().getPluginManager().registerEvents(new Listener(), this);
+			this.getServer().getPluginManager().registerEvents(new Nicknames(instance), this);
 			this.getConfig().options().copyDefaults(true);
 			getCommand("command_name").setExecutor(new Enforcement(this));
 		}
@@ -132,6 +134,7 @@ public class Main extends JavaPlugin{
 			Economy e = new Economy(this);
 			
 			e.Command(sender, cmd, commandLabel, args);
+			Nicknames.onCommand(sender, cmd, commandLabel, args);
 			return false;
 		} //Join Message
 		

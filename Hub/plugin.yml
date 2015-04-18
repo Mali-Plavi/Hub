@@ -23,3 +23,5 @@ commands:
     description: gets shit
   tpall:
     description: tps
+  nick:
+    description: does shit

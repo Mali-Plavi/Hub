@@ -7,11 +7,16 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -205,5 +210,52 @@ public class Listener implements org.bukkit.event.Listener{
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e){
 		ChatManager.onChat(e);
+	}
+	
+	@EventHandler
+	public void onBlockBreak(BlockBreakEvent e){
+		if(e.getPlayer().hasPermission("blocks.change")){
+			return;
+		}else{
+			e.setCancelled(true);
+		}
+	}
+	
+	@EventHandler
+	public void onBlockPlace(BlockPlaceEvent e){
+		if(e.getPlayer().hasPermission("blocks.change")){
+			if(e.getPlayer().getItemInHand().getItemMeta() != null){
+				if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName() != null){
+					if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Cosmetic Menu")){
+						e.setCancelled(true);
+					}
+				}return;
+			}else{
+				e.setCancelled(true);
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onDrop(PlayerDropItemEvent e){
+		Player p = e.getPlayer();
+		if(p.hasPermission("items.drop")){
+			if(e.getItemDrop().getItemStack().getItemMeta() != null){
+				if(e.getItemDrop().getItemStack().getItemMeta().getDisplayName() != null){
+					if(e.getItemDrop().getItemStack().getItemMeta().getDisplayName().contains("Cosmetic Menu")){
+						e.setCancelled(true);
+					}
+				}
+			}
+			return;
+		}else{
+			e.setCancelled(true);
+		}
+	}
+	@EventHandler
+	public void weatherChangeEvent(WeatherChangeEvent e){
+		if(e.toWeatherState()){
+			e.setCancelled(true);
+		}
 	}
 }

@@ -9,7 +9,7 @@ public class ChatManager {
 public static void onChat(AsyncPlayerChatEvent e){
 	Player p = e.getPlayer();
 	if(p.isOp()){
-		e.setFormat(ChatColor.GRAY + e.getPlayer().getName() + ChatColor.DARK_GRAY +  "> " + ChatColor.GRAY + e.getMessage());
+		e.setFormat(ChatColor.GRAY + e.getPlayer().getCustomName() + ChatColor.DARK_GRAY +  "> " + ChatColor.GRAY + e.getMessage());
 	}else{
 			if(p.hasPermission("rank.guide")){
 			
@@ -51,7 +51,7 @@ public static void onChat(AsyncPlayerChatEvent e){
 			}else if(p.hasPermission("rank.ogs")){
 			
 			}else{
-				e.setFormat(ChatColor.GRAY + e.getPlayer().getName() + ChatColor.DARK_GRAY +  "> " + ChatColor.GRAY + e.getMessage());
+				e.setFormat(ChatColor.GRAY + e.getPlayer().getCustomName() + ChatColor.DARK_GRAY +  "> " + ChatColor.GRAY + e.getMessage());
 			}
 		}
 	}
