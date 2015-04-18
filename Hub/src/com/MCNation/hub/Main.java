@@ -129,7 +129,7 @@ public class Main extends JavaPlugin{
 			Enforcement.Command(sender, cmd, commandLabel, args);
 			TeleportManager.onCommand(sender, cmd, commandLabel, args);
 			
-			Economy e = new Economy();
+			Economy e = new Economy(this);
 			
 			e.Command(sender, cmd, commandLabel, args);
 			return false;
