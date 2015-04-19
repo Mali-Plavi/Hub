@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.MCNation.chat.Nicknames;
+import com.MCNation.command.TeleportManager;
 import com.MCNation.economy.Economy;
 
 
