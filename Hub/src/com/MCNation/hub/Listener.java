@@ -22,6 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
+import com.MCNation.chat.ChatManager;
 import com.MCNation.gadgets.Pets;
 
 public class Listener implements org.bukkit.event.Listener{
