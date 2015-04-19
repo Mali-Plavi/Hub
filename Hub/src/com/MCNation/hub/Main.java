@@ -119,8 +119,10 @@ public class Main extends JavaPlugin{
 					player.sendMessage(ChatColor.RED + "/warp <warpname>");
 				}else{
 					if(getWarpConfig().contains(args[0])){
-						player.teleport((Location) getWarpConfig().get(args[0]));
-						player.sendMessage(ChatColor.GREEN + "Sucuessfuly warped to " + args[0]);
+						if(player.hasPermission("warp." + args[0])){
+							player.teleport((Location) getWarpConfig().get(args[0]));
+							player.sendMessage(ChatColor.GREEN + "Sucuessfuly warped to " + args[0]);
+						}
 				}else{
 					player.sendMessage(ChatColor.RED + "That warp doesen't exist");
 				}
