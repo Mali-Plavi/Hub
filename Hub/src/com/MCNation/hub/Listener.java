@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
@@ -13,7 +14,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
@@ -22,7 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
-import com.MCNation.economy.Economy;
+import com.MCNation.gadgets.Pets;
 
 public class Listener implements org.bukkit.event.Listener{
 	
@@ -119,6 +119,7 @@ public class Listener implements org.bukkit.event.Listener{
 		
 		pe = Bukkit.createInventory(null, 45+9, "Pets");
 		pe.setItem(45, bk);
+		addPets();
 		p.openInventory(pe);
 	}
 	
@@ -256,6 +257,31 @@ public class Listener implements org.bukkit.event.Listener{
 	public void weatherChangeEvent(WeatherChangeEvent e){
 		if(e.toWeatherState()){
 			e.setCancelled(true);
+		}
+	}
+	
+	public void addPets(){
+		ItemStack wolf = new ItemStack(Material.MONSTER_EGG, 1, (short) 0, (byte) 95);
+		ItemMeta wm = wolf.getItemMeta();
+		wm.setDisplayName(ChatColor.GOLD + "Wolf");
+		wolf.setItemMeta(wm);
+		
+		pe.setItem(10, wolf);
+	}
+	@EventHandler
+	public void clickPets(InventoryClickEvent e){
+		if(e.getCurrentItem().getItemMeta() != null){
+			if(e.getCurrentItem().getItemMeta().getDisplayName() != null){
+				if(e.getInventory().getName() != null){
+					if(e.getInventory().getName().contains("Pets")){
+						if(e.getCurrentItem().getItemMeta().getDisplayName().contains("Wolf")){
+							e.getWhoClicked().sendMessage("you did it");
+							e.setCancelled(true);
+							Pets.setPet((Player) e.getWhoClicked(), EntityType.WOLF);
+						}
+					}
+				}
+			}
 		}
 	}
 }
