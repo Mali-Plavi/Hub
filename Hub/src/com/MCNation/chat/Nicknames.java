@@ -10,12 +10,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import com.MCNation.hub.Main;
-import com.avaje.ebeaninternal.server.autofetch.TunedQueryInfo;
 
 public class Nicknames implements Listener{
 	
@@ -50,6 +47,7 @@ public class Nicknames implements Listener{
 	    }
 	}
 	
+	@SuppressWarnings("static-access")
 	public Nicknames(Main plugin){
 		this.plugin = plugin;
 	}
@@ -64,6 +62,7 @@ public class Nicknames implements Listener{
 		p.setCustomName(p.getName());
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static boolean onCommand(CommandSender sender, Command cmd, String l, String[] args) {
 		Player p = (Player) sender;
 		if(l.equalsIgnoreCase("nick")){

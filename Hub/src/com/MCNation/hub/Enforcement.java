@@ -9,10 +9,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
  
 public class Enforcement extends JavaPlugin implements CommandExecutor{
+		@SuppressWarnings("unused")
 		private Main plugin;
 		public Enforcement(Main plugin){
 			this.plugin = plugin;
 		}
+		@SuppressWarnings("deprecation")
 		public static boolean Command(CommandSender sender, Command cmd, String commandLabel, String[] args) {
                 if (cmd.getName().equalsIgnoreCase("kick")) {
                 	Player p = (Player) sender;

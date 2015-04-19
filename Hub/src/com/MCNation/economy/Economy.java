@@ -3,14 +3,12 @@ package com.MCNation.economy;
 import java.io.File;
 import java.io.IOException;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import com.MCNation.hub.Main;
 
@@ -85,7 +83,6 @@ public class Economy{
 	}
 	
 	//commandstuff
-	@SuppressWarnings("deprecation")
 	public boolean Command(CommandSender sender, Command cmd, String l, String[] args) {
 		Player p = (Player) sender;
 			

@@ -7,12 +7,14 @@ import org.bukkit.entity.Player;
 
 public class TeleportManager {
 	
-	 private Main plugin;
+	 @SuppressWarnings("unused")
+	private Main plugin;
 	 
 	    public TeleportManager(Main instance) {
 	        plugin = instance;
 	    }
 	
+	@SuppressWarnings("deprecation")
 	public static boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 			Player p = (Player) sender;
 		if(label.equalsIgnoreCase("tpall")){

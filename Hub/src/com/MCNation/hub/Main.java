@@ -12,7 +12,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.MCNation.chat.Nicknames;
@@ -27,6 +26,7 @@ public class Main extends JavaPlugin{
 	    
 		private FileConfiguration warpc = null;
 		private File warpf = null;
+		@SuppressWarnings("unused")
 		private Main instance;
 		
 		
@@ -59,12 +59,12 @@ public class Main extends JavaPlugin{
 		    }
 		}
 		
+		@SuppressWarnings("unused")
 		private static final Logger log = Logger.getLogger("Minecraft");
 		
 	    @Override
 		public void onEnable() {
 			this.getServer().getPluginManager().registerEvents(new Listener(), this);
-			this.getServer().getPluginManager().registerEvents(new Nicknames(instance), this);
 			this.getConfig().options().copyDefaults(true);
 			getCommand("command_name").setExecutor(new Enforcement(this));
 		}
@@ -74,6 +74,7 @@ public class Main extends JavaPlugin{
 			saveWarpConfig();
 		}
 		//Help
+		@SuppressWarnings({ "unused", "deprecation" })
 		public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 			
 			Player player = (Player) sender;

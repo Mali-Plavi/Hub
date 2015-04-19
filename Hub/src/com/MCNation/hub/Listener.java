@@ -153,6 +153,7 @@ public class Listener implements org.bukkit.event.Listener{
 	}
 	
 			//the thing for when you click in inv
+	@SuppressWarnings("unused")
 	@EventHandler
 	public void invInteract(InventoryClickEvent e){
 		if(e.getCurrentItem() != null){
@@ -260,6 +261,7 @@ public class Listener implements org.bukkit.event.Listener{
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void addPets(){
 		ItemStack wolf = new ItemStack(Material.MONSTER_EGG, 1, (short) 0, (byte) 95);
 		ItemMeta wm = wolf.getItemMeta();
