@@ -66,6 +66,10 @@ public class Nicknames implements Listener{
 	public static boolean onCommand(CommandSender sender, Command cmd, String l, String[] args) {
 		Player p = (Player) sender;
 		if(l.equalsIgnoreCase("nick")){
+			if(!p.hasPermission("essentials.nick")){
+				p.sendMessage(ChatColor.RED + "You dont have permission to do this");
+				return true;
+			}
 			if(args.length == 1){
 				if(args[0].equalsIgnoreCase("off")){
 					turnNicknameOff(p);

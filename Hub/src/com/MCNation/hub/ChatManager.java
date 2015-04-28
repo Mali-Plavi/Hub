@@ -6,6 +6,9 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ChatManager {
 	
+	public static String prefix = ChatColor.AQUA + "MCNation" + ChatColor.GRAY + "> ";
+	public static String permFormat = prefix + ChatColor.RED + "You dont have permission to do this";
+	
 public static void onChat(AsyncPlayerChatEvent e){
 	Player p = e.getPlayer();
 	if(p.isOp()){

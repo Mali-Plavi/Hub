@@ -14,6 +14,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.MCNation.bossbar.Bossbar;
 import com.MCNation.chat.Nicknames;
 import com.MCNation.command.TeleportManager;
 import com.MCNation.economy.Economy;
@@ -65,9 +66,10 @@ public class Main extends JavaPlugin{
 		
 	    @Override
 		public void onEnable() {
-			this.getServer().getPluginManager().registerEvents(new Listener(), this);
-			this.getConfig().options().copyDefaults(true);
-			getCommand("command_name").setExecutor(new Enforcement(this));
+				this.getServer().getPluginManager().registerEvents(new Listener(), this);
+				this.getConfig().options().copyDefaults(true);
+				getCommand("command_name").setExecutor(new Enforcement(this));
+
 		}
 		
 		@Override
@@ -79,25 +81,39 @@ public class Main extends JavaPlugin{
 		public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 			
 			Player player = (Player) sender;
+			if(cmd.getName().equalsIgnoreCase("setspawn")){
+				if(player.hasPermission("spawn.set")){
+					getConfig().set("spawn", player.getLocation().getBlock());
+					player.sendMessage(ChatColor.GREEN + "Sucuessfully set spawn to: " + player.getLocation().getBlockX() + " " + player.getLocation().getBlockY() + " " + player.getLocation().getBlockZ());
+					
+					return true;
+				}
+				player.sendMessage(ChatManager.permFormat);
+			}
+			
 			if(commandLabel.equalsIgnoreCase("help")) {
 				player.sendMessage(ChatColor.GOLD + "A more comprehensive help system will come in the future.");
 			}
 			if(commandLabel.equalsIgnoreCase("teleport")) {
-				if(args.length == 0) {
-					player.sendMessage(ChatColor.RED + "Too little arguments.");
-				}else if(args.length == 1) {
-					Player targetPlayer = player.getServer().getPlayer(args[0]);
-					Location targetPlayerLocation = targetPlayer.getLocation();
-					player.teleport(targetPlayerLocation);
-				}else if(args.length == 2) {
-					Player targetPlayer = player.getServer().getPlayer(args[0]);
-					Player targetPlayer1 = player.getServer().getPlayer(args[1]);
-				    Location targetPlayer1Location = targetPlayer1.getLocation();
-				    targetPlayer.teleport(targetPlayer1Location);
+				if(player.hasPermission("teleport")){
+					if(args.length == 0) {
+						player.sendMessage(ChatColor.RED + "Too little arguments.");
+					}else if(args.length == 1) {
+						Player targetPlayer = player.getServer().getPlayer(args[0]);
+						Location targetPlayerLocation = targetPlayer.getLocation();
+						player.teleport(targetPlayerLocation);
+					}else if(args.length == 2) {
+						Player targetPlayer = player.getServer().getPlayer(args[0]);
+						Player targetPlayer1 = player.getServer().getPlayer(args[1]);
+						Location targetPlayer1Location = targetPlayer1.getLocation();
+						targetPlayer.teleport(targetPlayer1Location);
+				}
+				}else{
+					player.sendMessage(ChatManager.permFormat);
 				}
 			} //Warps
 			if(commandLabel.equalsIgnoreCase("setwarp")) {
-				if(player.hasPermission("setwarp")||player.isOp()){
+				if(player.hasPermission("warp.set")){
 				FileConfiguration c = getWarpConfig();
 				if(args.length == 0) {
 					player.sendMessage(ChatColor.RED + "/setwarp <warpname>");
@@ -128,8 +144,7 @@ public class Main extends JavaPlugin{
 				}
 				}
 			}else if(commandLabel.equalsIgnoreCase("warps")) {
-				String warps = "";
-				player.sendMessage("TO BE IMPLEMENTED");
+				
 					
 				}
 			Enforcement.Command(sender, cmd, commandLabel, args);

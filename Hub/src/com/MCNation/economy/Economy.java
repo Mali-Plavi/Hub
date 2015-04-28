@@ -59,7 +59,7 @@ public class Economy{
 	
 	public int getBalance(String p){
 		FileConfiguration c = getEconConfig();
-		return (int) c.get(p);
+		return (Integer) c.get(p);
 	}
 	
 	public void addPlayer(Player p){

@@ -1,4 +1,4 @@
-name: Hub Essentials
+name: HubEssentials
 version: 1.0
 main: com.MCNation.hub.Main
 
@@ -25,3 +25,7 @@ commands:
     description: tps
   nick:
     description: does shit
+  spawnmob:
+    description: idk
+  setspawn:
+    description: setsspawn

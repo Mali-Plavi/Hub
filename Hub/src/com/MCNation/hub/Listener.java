@@ -4,12 +4,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -45,14 +47,17 @@ public class Listener implements org.bukkit.event.Listener{
 	@EventHandler
 	public void PlayerInteract(PlayerInteractEvent e){
 		Action a = e.getAction();
-		if(a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK){
+		if(a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK || a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK){
 			if(e.getPlayer().getItemInHand().getItemMeta() != null){
 				if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName() != null){
-				if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Cosmetic Menu")){
-					cosmetics(e.getPlayer());
-				}}
+					if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Cosmetic Menu")){
+						cosmetics(e.getPlayer());
+					}
+				}
 			}
 		}
+		
+		Visibility.onClick(e);
 	}
 	public void cosmetics(Player pl){
 		cosmetic = Bukkit.createInventory(null,54,"Cosmetic Menu");
@@ -201,6 +206,8 @@ public class Listener implements org.bukkit.event.Listener{
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		Player player = e.getPlayer();
+		Visibility.onJoin(e);
+		
 		e.setJoinMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "+" + ChatColor.GRAY + "] " + player.getName());
 	}
 	@EventHandler
@@ -230,6 +237,7 @@ public class Listener implements org.bukkit.event.Listener{
 				if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName() != null){
 					if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Cosmetic Menu")){
 						e.setCancelled(true);
+						e.getBlock().getWorld().playSound(e.getBlock().getLocation(), Sound.AMBIENCE_CAVE, 1, 1);
 					}
 				}return;
 			}else{
@@ -239,7 +247,13 @@ public class Listener implements org.bukkit.event.Listener{
 	}
 	
 	@EventHandler
+	public void onSpawn(CreatureSpawnEvent e){
+		MobSpawning.onSpawn(e);
+	}
+	
+	@EventHandler
 	public void onDrop(PlayerDropItemEvent e){
+		Visibility.onThrow(e);
 		Player p = e.getPlayer();
 		if(p.hasPermission("items.drop")){
 			if(e.getItemDrop().getItemStack().getItemMeta() != null){
