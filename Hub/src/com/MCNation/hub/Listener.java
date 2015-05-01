@@ -35,7 +35,6 @@ public class Listener implements org.bukkit.event.Listener{
 	@EventHandler
 	public void playerJoinEvent(PlayerJoinEvent e){
 		Player p = e.getPlayer();
-		
 		ItemStack i = new ItemStack(Material.CHEST);
 		ItemMeta m = i.getItemMeta();
 		m.setDisplayName(ChatColor.GREEN + "Cosmetic Menu");
@@ -237,18 +236,20 @@ public class Listener implements org.bukkit.event.Listener{
 				if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName() != null){
 					if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Cosmetic Menu")){
 						e.setCancelled(true);
-						e.getBlock().getWorld().playSound(e.getBlock().getLocation(), Sound.AMBIENCE_CAVE, 1, 1);
 					}
-				}return;
-			}else{
-				e.setCancelled(true);
+				}
 			}
+		}else{
+			e.setCancelled(true);
 		}
 	}
 	
 	@EventHandler
 	public void onSpawn(CreatureSpawnEvent e){
 		MobSpawning.onSpawn(e);
+		e.setCancelled(true);
+		e.getEntity().remove();
+		e.getEntity().setHealth(0.0);
 	}
 	
 	@EventHandler

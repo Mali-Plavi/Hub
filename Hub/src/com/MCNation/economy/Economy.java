@@ -10,6 +10,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import com.MCNation.hub.ChatManager;
 import com.MCNation.hub.Main;
 
 public class Economy{
@@ -97,6 +98,8 @@ public class Economy{
 					}else{
 						p.sendMessage(ChatColor.RED + "To little args");
 					}
+				}else{
+					p.sendMessage(ChatManager.permFormat);
 				}
 			}
 			

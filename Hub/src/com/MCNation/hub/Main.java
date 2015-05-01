@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -69,7 +70,6 @@ public class Main extends JavaPlugin{
 				this.getServer().getPluginManager().registerEvents(new Listener(), this);
 				this.getConfig().options().copyDefaults(true);
 				getCommand("command_name").setExecutor(new Enforcement(this));
-
 		}
 		
 		@Override
@@ -95,7 +95,7 @@ public class Main extends JavaPlugin{
 				player.sendMessage(ChatColor.GOLD + "A more comprehensive help system will come in the future.");
 			}
 			if(commandLabel.equalsIgnoreCase("teleport")) {
-				if(player.hasPermission("teleport")){
+				if(player.hasPermission("essentials.teleport")){
 					if(args.length == 0) {
 						player.sendMessage(ChatColor.RED + "Too little arguments.");
 					}else if(args.length == 1) {
@@ -129,6 +129,8 @@ public class Main extends JavaPlugin{
 						
 						}
 					}
+				}else{
+					player.sendMessage(ChatManager.permFormat);
 				}
 			}else if(commandLabel.equalsIgnoreCase("warp")) {
 				if(args.length == 0){
@@ -138,6 +140,8 @@ public class Main extends JavaPlugin{
 						if(player.hasPermission("warp." + args[0])){
 							player.teleport((Location) getWarpConfig().get(args[0]));
 							player.sendMessage(ChatColor.GREEN + "Sucuessfuly warped to " + args[0]);
+						}else{
+							player.sendMessage(ChatManager.permFormat);
 						}
 				}else{
 					player.sendMessage(ChatColor.RED + "That warp doesen't exist");

@@ -39,9 +39,9 @@ public class TeleportManager {
 			}
 			}
 		}
-		}else{
+		else{
 			p.sendMessage(ChatManager.permFormat);
-		}
+		}}
 		return false;
 	}
 }

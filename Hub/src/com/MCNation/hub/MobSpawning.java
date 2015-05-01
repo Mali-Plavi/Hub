@@ -16,7 +16,7 @@ public class MobSpawning {
 
 	public static void onSpawn(CreatureSpawnEvent e){
 		LivingEntity c = e.getEntity();
-		e.setCancelled(true);
+		e.getEntity().remove();
 	}
 	
 	@SuppressWarnings("deprecation")

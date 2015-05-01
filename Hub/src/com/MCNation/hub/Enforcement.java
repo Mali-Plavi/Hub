@@ -16,8 +16,13 @@ public class Enforcement extends JavaPlugin implements CommandExecutor{
 		}
 		@SuppressWarnings("deprecation")
 		public static boolean Command(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-                if (cmd.getName().equalsIgnoreCase("essentials.kick")) {
-                	Player p = (Player) sender;
+			Player p = (Player) sender;
+                if (cmd.getName().equalsIgnoreCase("kick")) {
+                	if(!p.hasPermission("essentials.kick")){
+                		p.sendMessage(ChatManager.permFormat);
+                		return false;
+                	}
+              
                         if (args.length == 0) {
                                 p.sendMessage(ChatColor.RED + "Please specify a player!");
                                 return true;
@@ -30,10 +35,14 @@ public class Enforcement extends JavaPlugin implements CommandExecutor{
                         target.kickPlayer(ChatColor.RED + "You have been kicked!");
                         Bukkit.getServer().getPluginManager().callEvent(new EnforcementEvent(target, Type.KICK));
                         Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + "Player " + target.getName() + " has been kicked by " + sender.getName() + "!");
-                }else{
-                	sender.sendMessage(ChatManager.permFormat);
                 }
-                if (cmd.getName().equalsIgnoreCase("essentials.ban")) {
+                if (cmd.getName().equalsIgnoreCase("ban")) {
+                		
+                	if(!p.hasPermission("essentials.ban")){
+                			p.sendMessage(ChatManager.permFormat);
+                			return false;
+                		}
+                	
                         if (args.length == 0) {
                                 sender.sendMessage(ChatColor.RED + "Please specify a player!");
                                 return true;
@@ -47,7 +56,7 @@ public class Enforcement extends JavaPlugin implements CommandExecutor{
                         target.setBanned(true);
                         Bukkit.getServer().getPluginManager().callEvent(new EnforcementEvent(target, Type.BAN));
                         Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + "Player " + target.getName() + " has been banned by " + sender.getName() + "!");
-                }else{sender.sendMessage(ChatManager.permFormat);}
+                }
                 return true;
         }
 }
